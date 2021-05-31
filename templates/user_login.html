@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}mee{% endblock title %}
+{% block body %}
+<div class="col-md-8" id="main_content">
+			<center><h3>User Login Form</h3></center>
+        <form action="post" action="/user_login">
+        {% csrf_token %}
+         <div class="form-group">
+    <label for="email">Email Address</label>
+    <input type="email" class="form-control" id="loginemail" name="loginemail" placeholder="name@example.com">
+  </div>
+        <div class="form-group">
+    <label for="password">Password</label>
+<input type="password" class="form-control" id="loginpassword" name="loginpassword" placeholder="Password">
+  </div>
+  <button type="submit" class="btn btn-dark" value="login">Login</button>
+  <a href="/register">Not registered yet?</a></label>
+
+{% endblock body %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}mee{% endblock title %}
+{% block body %}
+<div class="col-md-8" id="main_content">
+			<center><h3>Register Form</h3></center>
+        <form method="post" action="/register">
+            {% csrf_token %}
+         <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" name="name" placeholder="Enter your first and last name" required>
+  </div>
+        <div class="form-group">
+    <label for="email">Email Address</label>
+<input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+  </div>
+     <div class="form-group">
+    <label for="password">Password</label>
+<input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+  </div>
+     <div class="form-group">
+    <label for="phone">Mobile Number</label>
+<input type="text" class="form-control" id="phone" name="phone" placeholder="Number" required>
+  </div>
+   <div class="form-group">
+    <label for="address">Address</label>
+     <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+  </div>
+<button type="submit" class="btn btn-dark" value="submit">Submit</button> <label>
+</form>
+{% endblock body %}

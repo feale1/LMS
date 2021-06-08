@@ -1,6 +1,15 @@
 from django.db import models
 
 # Create your models here.
+
+
+from django.contrib.auth.models import User, AbstractUser, Group
+
+
+class User(AbstractUser):
+    pass
+
+
 class Register(models.Model):
     name = models.CharField(max_length=120)
     email=models.CharField(max_length=120)

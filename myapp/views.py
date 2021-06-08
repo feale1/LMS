@@ -1,14 +1,20 @@
 from django.shortcuts import render,redirect
 from datetime import datetime
+from django.urls import reverse_lazy
+from django.views.generic import FormView, View
+
 from myapp.models import Register
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, login
 from django.contrib.auth import authenticate
 
+from .forms import LoginForm
+
 # Create your views here.
 def index(request):
     return render(request,"user_login.html")
+
 def admin_login(request):
     if request.method=="POST":
         email= request.POST['email']
@@ -22,6 +28,7 @@ def admin_login(request):
             messages.info(request,"invalid credentials")
             return redirect("/")
     return render(request,"admin_login.html")
+
 def user_login(request):
     if request.method=="POST":
         loginemail= request.POST['loginemail']
@@ -37,6 +44,8 @@ def user_login(request):
 
     else:
        return render(request,"user_login.html")
+
+
 def register(request):
     if request.method=="POST":
         name= request.POST.get('name')
@@ -53,7 +62,37 @@ def register(request):
         return redirect('/')
     else:
         return render(request,"register.html")
+
+
 def logoutUser(request):
     logout(request)
+
+    
 def user_dash(request):
     return render(request,"user_dash.html")
+
+
+
+"""
+User login
+"""
+
+class LoginView(FormView):
+    template_name = "user_login.html"
+    form_class = LoginForm
+    success_url = reverse_lazy('myapp:register')
+
+    def form_valid(self, form):
+        uname = self.request.POST["username"]
+        pword = self.request.POST["password"]
+        user = authenticate(username=uname, password=pword)
+        print("abc",uname)
+        if user is not None:
+            login(self.request, user)
+        else:
+            return render(
+                self.request,
+                self.template_name,
+                {"error": "your username doesnot exist", "form": form},
+            )
+        return super().form_valid(form)
